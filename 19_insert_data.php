@@ -6,7 +6,7 @@ $database = "v";
 
 $conn = mysqli_connect($servername,$username,$pas,$database);
 
-$sql = "INSERT INTO `vinay`(`name`,`email`) VALUES('VINAY','BOSAMIYA')";
+$sql = "INSERT INTO `vinay`(`First Name`,`Last Name`) VALUES('VINAY','BOSAMIYA')";
 
 $result = mysqli_query($conn,$sql);
 if ($result) {
