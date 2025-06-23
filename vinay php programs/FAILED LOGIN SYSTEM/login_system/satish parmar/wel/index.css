@@ -1,0 +1,27 @@
+body{
+    background-color: rgb(255, 216, 18);
+}
+#h1{
+
+  color: rgb(0, 0, 0);
+  font-size: 61px;
+  font-weight: bold;
+}
+  svg{   
+    height: 20px;
+      width: 20px;
+      position: relative;
+      top: 39px;
+      right: 165px;
+      fill:rgba(132, 134, 136, 1);
+  }
+
+.input-box {
+  padding-left: 36px; /* Adds space before the placeholder text */
+  height: 40px;
+  font-size: 16px;
+}
+
+.up{
+  font-weight: bold;
+}
