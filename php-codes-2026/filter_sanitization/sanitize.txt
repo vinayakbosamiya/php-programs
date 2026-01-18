@@ -1,3 +1,0 @@
-in the php programming language when use any sanitize function 
-that is use to convert invalid form to valid form so that for each
-form available different sanitize function 
