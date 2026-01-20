@@ -33,7 +33,7 @@ class database{
 
            $sql = "INSERT INTO $table($table_cols) VALUES ('$table_vals')";
            if($this->mysqli->query($sql)){
-             array_push($this->res,$this->mysqli->insert_id);
+             array_push($this->res,$this->mysqli->insert_id); //insert_id this fetch id from the table
              return true;
             }else{
                array_push($this->res,$this->mysqli->error);
@@ -44,14 +44,93 @@ class database{
             return false;
         }
     }
-    public function select(){
+    public function update($table,$val=array(),$where=null){
+        if($this->tableExist($table)){
+           $args = array();
+           foreach ($val as $key => $value) {
+            $args[] = "$key = '$value'";
+           }
+        //    print_r($args);
+        //    echo "<br>";
+              $sql = "UPDATE $table SET " . implode(', ',$args);
+              if($where != null){
+                $sql .=" WHERE $where ";
+              }
+            //   echo $sql;
+            if($this->mysqli->query($sql)){
+                array_push($this->res,$this->mysqli->affected_rows);
+                return true;
+            }else{
+                array_push($this->res,$this->mysqli->error);
+            }
+
+        }else{
+            return false;
+        }
 
     }
+    public function select($table,$row="*",$join_table=null,$where=null,$order=null,$limit=null){
 
-    public function update(){
+        if($this->tableExist($table)){
+            $sql = "SELECT $row FROM $table";
+            if($join_table !=null){
+                $sql = $sql." JOIN $join_table";
+            }
+            if($where !=null){
+                $sql = $sql." WHERE $where";
+            }
+            if($order !=null){
+                $sql = $sql." ORDER BY $order";
+            }
+            if($limit !=null){
+                $sql = $sql." LIMIT 0,$limit";
+            }
+            echo $sql;
 
+            $query = $this->mysqli->query($sql);
+        if($query){
+            $this->res = $query->fetch_all(MYSQLI_ASSOC); // this method return associative array throw mysqli query
+            return true;
+        }
+        else{
+            array_push($this->res,$this->mysqli->error);
+            return false;
+        }
+        }else{
+            return false;
+        }
     }
-    public function delete(){
+
+    public function selectSql($sql){
+        
+        $query = $this->mysqli->query($sql);
+        if($query){
+            $this->res = $query->fetch_all(MYSQLI_ASSOC); // this method return associative array throw mysqli query
+            return true;
+        }
+        else{
+            array_push($this->res,$this->mysqli->error);
+            return false;
+        }
+        echo $query;
+    }
+
+    public function delete($table,$where=null){
+        if($this->tableExist($table)){
+            $sql = "DELETE FROM $table";
+            if ($where != NULL){
+                $sql = $sql ." WHERE $where";
+            }
+            if($this->mysqli->query($sql)){
+                array_push($this->res,$this->mysqli->affected_rows);
+                return true;
+            }else{
+                array_push($this->mysqli->error);
+                return false;
+            }
+        }else{
+            return false;
+        }
 
     }
 
